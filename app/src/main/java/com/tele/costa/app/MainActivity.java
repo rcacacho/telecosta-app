@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!usu.getText().toString().equals(null) && !password.getText().toString().equals(null)){
                     String MD5_Hash_String = md5(password.getText().toString());
-                    //String url = "https://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
+                    String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
                     //String url = "https://pokeapi.co/api/v2/pokemon/ditto";
-                    String url = "http://172.18.143.47:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
+                    //String url = "http://172.18.143.47:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
                     RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
                     JsonObjectRequest objectRequest = new JsonObjectRequest(
                             Request.Method.GET,
