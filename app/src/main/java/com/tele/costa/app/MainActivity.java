@@ -19,6 +19,8 @@ import org.json.JSONObject;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,10 +38,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!usu.getText().toString().equals(null) && !password.getText().toString().equals(null)){
                     String MD5_Hash_String = md5(password.getText().toString());
-                    String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
-                    //String url = "https://pokeapi.co/api/v2/pokemon/ditto";
+                    //String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
+                    String url = "https://pokeapi.co/api/v2/pokemon/ditto";
                     //String url = "http://172.18.143.47:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
+
+                    Map<String, String> parametros = new HashMap<String, String>();
+                    parametros.put("usuario", usu.getText().toString());
+                    parametros.put("password", MD5_Hash_String);
+
                     RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+
                     JsonObjectRequest objectRequest = new JsonObjectRequest(
                             Request.Method.GET,
                             url,
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivity(){
-        Intent intent = new Intent(this, Menu.class);
+        Intent intent = new Intent(this, Menus.class);
         startActivity(intent);
     }
 
