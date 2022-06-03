@@ -3,15 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/activity_main.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/activity_menus.xml" value="0.25" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/app_bar_menus.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/content_menus.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/fragment_gallery.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/fragment_home.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/fragment_slideshow.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/layout/nav_header_menus.xml" value="0.17135416666666667" />
-        <entry key="..\:/Users/rcacacho/Documents/GitHub/telecosta-app/app/src/main/res/menu/menus.xml" value="0.1859375" />
+        <entry key="..\:/Users/elfo_/OneDrive/Documents/GitHub/telecosta-app/app/src/main/res/layout/content_menus.xml" value="0.1" />
         <entry key="..\:/Users/rcacacho/IntelliJIDEAProjects/telecostaApp/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/rcacacho/IntelliJIDEAProjects/telecostaApp/app/src/main/res/layout/activity_menu.xml" value="0.17135416666666667" />
       </map>
