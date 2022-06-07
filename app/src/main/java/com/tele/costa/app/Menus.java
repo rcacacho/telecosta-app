@@ -3,11 +3,19 @@ package com.tele.costa.app;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import androidx.appcompat.app.AlertDialog;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -20,6 +28,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tele.costa.app.databinding.ActivityMenusBinding;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Menus extends AppCompatActivity {
 
@@ -28,8 +39,6 @@ public class Menus extends AppCompatActivity {
     FloatingActionButton btnCerrarSesion;
     SessionManager sessionManager;
     private ListView list;
-    private String url = "http://telecosta.tk:8080/telecostaweb-service/rest/pagos/clientes";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,7 @@ public class Menus extends AppCompatActivity {
 
         list = findViewById(R.id.listCliente);
         btnCerrarSesion = findViewById(R.id.fab);
+        jsonClientes();
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +118,40 @@ public class Menus extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void jsonClientes(){
+    public void jsonClientes() {
+        final ProgressBar progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        String url = "http://telecosta.tk:8080/telecostaweb-service/rest/pagos/clientes/" + sessionManager.getRoot() + "/"
+                + sessionManager.getIdUsuario() + "/" + sessionManager.getIdMunicipio();
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressBar.setVisibility(View.INVISIBLE);
+                Log.e("Respuesta ", response.toString());
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i< jsonArray.length(); i++){
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        Integer idcliente = object.getInt("idcliente");
+                        String codigo = object.getString("codigo");
+                        String  nombre = object.getString("nombre");
+                        String direccion = object.getString("direccion");
+                        String fecha_pago = object.getString("fecha_pago");
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error ", error.toString());
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(stringRequest);
     }
 }

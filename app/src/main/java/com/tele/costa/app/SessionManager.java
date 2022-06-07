@@ -37,7 +37,7 @@ public class SessionManager {
         editor.commit();
     }
 
-    public Integer getIdUsuario(Object o){
+    public Integer getIdUsuario(){
         return  sharedPreferences.getInt("KEY_IDUSERNAME", 0);
     }
 
