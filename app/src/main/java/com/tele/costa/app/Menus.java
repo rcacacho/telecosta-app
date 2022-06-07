@@ -1,9 +1,14 @@
 package com.tele.costa.app;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import android.widget.ListView;
+import androidx.appcompat.app.AlertDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -20,11 +25,17 @@ public class Menus extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMenusBinding binding;
+    FloatingActionButton btnCerrarSesion;
+    SessionManager sessionManager;
+    private ListView list;
+    private String url = "http://telecosta.tk:8080/telecostaweb-service/rest/pagos/clientes";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sessionManager = new SessionManager(getApplicationContext());
         binding = ActivityMenusBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -47,6 +58,40 @@ public class Menus extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_menus);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        list = findViewById(R.id.listCliente);
+        btnCerrarSesion = findViewById(R.id.fab);
+        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Dialogo de alerta
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Cerrar Sesion");
+                builder.setMessage("¿Esta seguro de cerrar sesion?");
+                builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sessionManager.setLogin(false);
+                        sessionManager.setIdMunicipio(null);
+                        sessionManager.setUsuario("");
+                        sessionManager.setIdUsuario(null);
+                        sessionManager.setLogin(false);
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
@@ -61,5 +106,9 @@ public class Menus extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_menus);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void jsonClientes(){
+
     }
 }

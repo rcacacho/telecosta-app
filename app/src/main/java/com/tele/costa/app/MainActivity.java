@@ -29,16 +29,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView usu =  findViewById(R.id.username);
+        TextView usu = findViewById(R.id.username);
         TextView password = findViewById(R.id.password);
-        MaterialButton btnLogin = (MaterialButton)  findViewById(R.id.loginbtn);
-
+        MaterialButton btnLogin = (MaterialButton) findViewById(R.id.loginbtn);
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!usu.getText().toString().equals(null) && !password.getText().toString().equals(null)){
+                if (password.getText().toString().equals("")) {
+                    password.setError("Ingrese una contraseña");
+                }
+
+
+                if (!usu.getText().toString().equals(null) && !password.getText().toString().equals(null)) {
                     String MD5_Hash_String = md5(password.getText().toString());
-                    //String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
+                    //String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/" + usu.getText().toString() + "/" + MD5_Hash_String;
                     String url = "https://pokeapi.co/api/v2/pokemon/ditto";
                     //String url = "http://172.18.143.47:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
 
@@ -56,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     Log.e("Respuesta ", response.toString());
+                                    sessionManager.setLogin(true);
+                                    sessionManager.setUsuario(usu.getText().toString().trim());
+
+                                    try {
+                                        if (response.has("idmunicipio")) {
+                                            sessionManager.setIdMunicipio(response.getJSONObject("idmunicipio").getInt("idmunicipio"));
+                                            sessionManager.setRoot(response.getJSONObject("root").getBoolean("root"));
+                                            sessionManager.setIdUsuario(response.getJSONObject("idusuario").getInt("idusuario"));
+                                        }
+                                    } catch (Exception e) {
+                                    }
+
                                     openActivity();
                                 }
                             },
@@ -63,12 +80,18 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Log.e("Error: ", error.toString());
+                                    Toast.makeText(getApplicationContext(),
+                                            "Usuario o contraseña invalidos!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                     );
                     requestQueue.add(objectRequest);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
+                }
+
+                if (sessionManager.getLogin()){
+                    openActivity();
                 }
             }
         });
@@ -90,9 +113,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void openActivity(){
+    public void openActivity() {
         Intent intent = new Intent(this, Menus.class);
         startActivity(intent);
+        finish();
     }
 
 }
