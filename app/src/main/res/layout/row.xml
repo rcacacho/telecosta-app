@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"><![CDATA[
+
+
+    @+id/textFila" app:layout_constraintStart_toStartOf="@+id/textFila"/>
+
+
+    ]]>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textFilaNombre"
+            tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="0dp" tools:layout_editor_absoluteX="16dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textFilaDireccion" tools:layout_editor_absoluteY="19dp"
+            tools:ignore="MissingConstraint
+            app:layout_constraintEnd_toEndOf=,MissingConstraints" tools:layout_editor_absoluteX="16dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textFilafecha" tools:layout_editor_absoluteY="38dp"
+            tools:ignore="MissingConstraint
+            app:layout_constraintStart_toStartOf=,MissingConstraints" tools:layout_editor_absoluteX="16dp"/>@+id/textView3" app:layout_constraintEnd_toEndOf="@+id/textView3"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

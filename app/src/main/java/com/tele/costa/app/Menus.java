@@ -28,9 +28,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tele.costa.app.databinding.ActivityMenusBinding;
+import com.tele.costa.app.model.ClienteAdapter;
+import com.tele.costa.app.model.ClienteModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Menus extends AppCompatActivity {
 
@@ -39,6 +44,7 @@ public class Menus extends AppCompatActivity {
     FloatingActionButton btnCerrarSesion;
     SessionManager sessionManager;
     private ListView list;
+    private List<ClienteModel> listCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,18 +138,28 @@ public class Menus extends AppCompatActivity {
                 Log.e("Respuesta ", response.toString());
 
                 try {
+                    listCliente = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i< jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        ClienteModel cl = new ClienteModel();
                         JSONObject object = jsonArray.getJSONObject(i);
                         Integer idcliente = object.getInt("idcliente");
                         String codigo = object.getString("codigo");
-                        String  nombre = object.getString("nombre");
+                        String nombre = object.getString("nombre");
                         String direccion = object.getString("direccion");
                         String fecha_pago = object.getString("fecha_pago");
+                        cl.setNombre(nombre);
+                        cl.setCodigo(codigo);
+                        cl.setDireccion(direccion);
+                        cl.setIdcliente(idcliente);
+                        cl.setFecha_pago(fecha_pago);
+                        listCliente.add(cl);
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
+                ClienteAdapter adapter = new ClienteAdapter(Menus.this, R.layout.row, listCliente);
+                list.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
