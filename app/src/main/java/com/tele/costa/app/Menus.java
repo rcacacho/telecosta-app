@@ -140,6 +140,7 @@ public class Menus extends AppCompatActivity {
                 try {
                     listCliente = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(response);
+                    Log.e("Error", jsonArray.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         ClienteModel cl = new ClienteModel();
                         JSONObject object = jsonArray.getJSONObject(i);

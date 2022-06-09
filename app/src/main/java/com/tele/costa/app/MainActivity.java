@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!usu.getText().toString().equals(null) && !password.getText().toString().equals(null)) {
                     String MD5_Hash_String = md5(password.getText().toString());
-                    //String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/" + usu.getText().toString() + "/" + MD5_Hash_String;
-                    String url = "https://pokeapi.co/api/v2/pokemon/ditto";
+                    String url = "http://telecosta.tk:8080/telecostaweb-service/rest/usuarios/login/" + usu.getText().toString() + "/" + MD5_Hash_String;
+                    //String url = "https://pokeapi.co/api/v2/pokemon/ditto";
                     //String url = "http://172.18.143.47:8080/telecostaweb-service/rest/usuarios/login/"+usu.getText().toString()+"/"+MD5_Hash_String;
 
                     Map<String, String> parametros = new HashMap<String, String>();
@@ -69,11 +69,10 @@ public class MainActivity extends AppCompatActivity {
                                             sessionManager.setIdMunicipio(response.getJSONObject("idmunicipio").getInt("idmunicipio"));
                                             sessionManager.setRoot(response.getJSONObject("root").getBoolean("root"));
                                             sessionManager.setIdUsuario(response.getJSONObject("idusuario").getInt("idusuario"));
+                                            openActivity();
                                         }
                                     } catch (Exception e) {
                                     }
-
-                                    openActivity();
                                 }
                             },
                             new Response.ErrorListener() {
@@ -88,10 +87,6 @@ public class MainActivity extends AppCompatActivity {
                     requestQueue.add(objectRequest);
                 } else {
                     Toast.makeText(MainActivity.this, "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
-                }
-
-                if (sessionManager.getLogin()){
-                    openActivity();
                 }
             }
         });
